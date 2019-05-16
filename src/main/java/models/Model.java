@@ -43,12 +43,20 @@ public class Model {
         notebookWriter.createNewXMLFileFromNotebook(fileToSaveTo, notebook);
     }
 
-    public void addNewSection(String sectionName) {
-        notebook.addSection(new Section(sectionName));
+    public void addNewSection(Node parentNode, String sectionName) {
+        if (parentNode instanceof Section) {
+            ((Section) parentNode).addSection(new Section(sectionName));
+        } else {
+            notebook.addSection(new Section(sectionName));
+        }
     }
 
-    public void addNewNote(String noteName) {
-        notebook.addNote(new Note(noteName));
+    public void addNewNote(Node parentNode, String noteName) {
+        if (parentNode instanceof Section) {
+            ((Section) parentNode).addNote(new Note(noteName));
+        } else {
+            notebook.addNote(new Note(noteName));
+        }
     }
 
     public void openNotebook(File file) {

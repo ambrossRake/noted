@@ -2,14 +2,13 @@ package notebook;
 
 import java.util.ArrayList;
 
-public class Notebook {
+public class Notebook extends Node {
 
     private ArrayList<Node> childNodes;
-    private String title;
 
     public Notebook(String title) {
+        super(title);
         childNodes = new ArrayList<>();
-        this.title = title;
     }
 
 
@@ -30,7 +29,7 @@ public class Notebook {
                 getNode(name, ((Section) childNode).getChildren());
             }
         }
-        return null;
+        return this;
     }
 
     public ArrayList<Node> getChildren() {
@@ -45,7 +44,4 @@ public class Notebook {
         childNodes.add(section);
     }
 
-    public String getTitle() {
-        return title;
-    }
 }

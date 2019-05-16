@@ -5,8 +5,10 @@ import input.InputFilter;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import models.Model;
@@ -25,8 +27,8 @@ public class EditorController implements Initializable {
     public MenuBar titleBar;
     public TreeView<String> notebookExplorer;
     public TextArea textArea;
-    private Note currentlySelectedNote = null;
     private Model editorModel;
+    private notebook.Node currentlySelectedNode;
 
     public EditorController() {
         editorModel = Model.getInstance();
@@ -62,21 +64,18 @@ public class EditorController implements Initializable {
 
         createTreeItems(root, notebook.getChildren());
 
-        notebookExplorer.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            Node node = event.getPickResult().getIntersectedNode();
-            if ((node instanceof TreeCell && ((TreeCell) node).getText() != null)) {
-                String treeItemName = (String) ((TreeCell) node).getTreeItem().getValue();
-                Note selectedNote = (Note) notebook.getNode(treeItemName);
-                if (selectedNote != null) {
-                    currentlySelectedNote = selectedNote;
-                    textArea.setText(selectedNote.getText());
-                }
+        notebookExplorer.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                currentlySelectedNode = notebook.getNode(newValue.getValue());
+            }
+            if (currentlySelectedNode instanceof Note) {
+                textArea.setText(((Note) currentlySelectedNode).getText());
             }
         });
 
         textArea.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (currentlySelectedNote != null) {
-                currentlySelectedNote.updateText(textArea.getText());
+            if (currentlySelectedNode instanceof Note) {
+                ((Note) currentlySelectedNode).updateText(textArea.getText());
             }
         });
     }
@@ -91,14 +90,14 @@ public class EditorController implements Initializable {
     }
 
     public void createNewSection() throws IOException {
-        String sectionName = InputDialogue.promptUser("Create New Notebook", new InputFilter(""), 60);
-        editorModel.addNewSection(sectionName);
+        String sectionName = InputDialogue.promptUser("Create New Section", new InputFilter(""), 60);
+        editorModel.addNewSection(currentlySelectedNode, sectionName);
         refreshNotebookExplorer();
     }
 
     public void createNewNote() throws IOException {
-        String noteName = InputDialogue.promptUser("Create New Notebook", new InputFilter(""), 60);
-        editorModel.addNewNote(noteName);
+        String noteName = InputDialogue.promptUser("Create New Note", new InputFilter(""), 60);
+        editorModel.addNewNote(currentlySelectedNode, noteName);
         refreshNotebookExplorer();
     }
 
