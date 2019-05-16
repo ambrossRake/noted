@@ -27,11 +27,11 @@ public class EditorController implements Initializable {
     public MenuBar titleBar;
     public TreeView<String> notebookExplorer;
     public TextArea textArea;
-    private Model editorModel;
+    private Model model;
     private notebook.Node currentlySelectedNode;
 
     public EditorController() {
-        editorModel = Model.getInstance();
+        model = Model.getInstance();
     }
 
     @Override
@@ -55,7 +55,7 @@ public class EditorController implements Initializable {
 
     private void refreshNotebookExplorer() {
 
-        Notebook notebook = editorModel.getNotebook();
+        Notebook notebook = model.getNotebook();
         notebookExplorer.setRoot(null);
 
         TreeItem<String> root = new TreeItem<>(notebook.getTitle());
@@ -64,20 +64,17 @@ public class EditorController implements Initializable {
 
         createTreeItems(root, notebook.getChildren());
 
-        notebookExplorer.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                currentlySelectedNode = notebook.getNode(newValue.getValue());
-            }
-            if (currentlySelectedNode instanceof Note) {
-                textArea.setText(((Note) currentlySelectedNode).getText());
-            }
-        });
+        notebookExplorer.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> handleSelectedNode(newValue)));
+        textArea.textProperty().addListener((observable, oldValue, newValue) -> model.updateNoteText(currentlySelectedNode, newValue));
+    }
 
-        textArea.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (currentlySelectedNode instanceof Note) {
-                ((Note) currentlySelectedNode).updateText(textArea.getText());
-            }
-        });
+    private void handleSelectedNode(TreeItem<String> newValue) {
+        if (newValue != null) {
+            currentlySelectedNode = model.getNotebook().getNode(newValue.getValue());
+        }
+        if (currentlySelectedNode instanceof Note) {
+            textArea.setText(((Note) currentlySelectedNode).getText());
+        }
     }
 
     public void saveNoteBookAs(ActionEvent actionEvent) {
@@ -86,18 +83,18 @@ public class EditorController implements Initializable {
         ExtensionFilter nbkExtensionFilter = new ExtensionFilter("Notebook (*.nbk)", "*.nbk");
         fileChooser.getExtensionFilters().add(nbkExtensionFilter);
         File fileToSaveTo = fileChooser.showSaveDialog(((Node) actionEvent.getTarget()).getScene().getWindow());
-        editorModel.saveNotebook(fileToSaveTo);
+        model.saveNotebook(fileToSaveTo);
     }
 
     public void createNewSection() throws IOException {
         String sectionName = InputDialogue.promptUser("Create New Section", new InputFilter(""), 60);
-        editorModel.addNewSection(currentlySelectedNode, sectionName);
+        model.addNewSection(currentlySelectedNode, sectionName);
         refreshNotebookExplorer();
     }
 
     public void createNewNote() throws IOException {
         String noteName = InputDialogue.promptUser("Create New Note", new InputFilter(""), 60);
-        editorModel.addNewNote(currentlySelectedNode, noteName);
+        model.addNewNote(currentlySelectedNode, noteName);
         refreshNotebookExplorer();
     }
 

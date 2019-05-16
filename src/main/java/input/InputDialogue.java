@@ -15,15 +15,19 @@ import java.util.function.UnaryOperator;
 
 public class InputDialogue {
 
+    private static Stage stage;
+    private static Scene scene;
     private static String userInput;
 
     public static String promptUser(String title, InputFilter filter, int maxLength) throws IOException {
 
-        Stage stage = new Stage();
+        stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle(title);
+
         Parent layout = FXMLLoader.load(InputDialogue.class.getResource("/fxml/InputDialogue.fxml"));
-        Scene scene = new Scene(layout);
+
+        scene = new Scene(layout);
         scene.getStylesheets().add(InputDialogue.class.getResource("/css/InputDialogue.css").toExternalForm());
 
         UnaryOperator<TextFormatter.Change> changeUnaryOperator = c -> {
@@ -42,20 +46,23 @@ public class InputDialogue {
         inputField.setTextFormatter(new TextFormatter<>(changeUnaryOperator));
 
         Button confirmationButton = (Button) scene.lookup("#confirmationButton");
-        confirmationButton.setOnAction(e -> {
-            if (filter.verify(inputField.getText())) {
-                Label errorMessage = (Label) scene.lookup("#errorMessage");
-                errorMessage.setText(filter.getFilterMessage());
-            } else {
-                userInput = inputField.getText();
-                stage.close();
-            }
-        });
+        confirmationButton.setOnAction(e -> verifyInputFilter(filter, inputField.getText()));
         Button cancelButton = (Button) scene.lookup("#cancelButton");
         cancelButton.setOnAction(e -> stage.close());
+
         stage.setScene(scene);
         stage.showAndWait();
 
         return userInput;
+    }
+
+    private static void verifyInputFilter(InputFilter filter, String inputText) {
+        if (filter.verify(inputText)) {
+            Label errorMessage = (Label) scene.lookup("#errorMessage");
+            errorMessage.setText(filter.getFilterMessage());
+        } else {
+            userInput = inputText;
+            stage.close();
+        }
     }
 }

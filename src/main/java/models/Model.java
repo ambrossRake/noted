@@ -62,4 +62,10 @@ public class Model {
     public void openNotebook(File file) {
         notebook = notebookReader.createNewNotebookFromXMLFile(file);
     }
+
+    public void updateNoteText(Node node, String newValue) {
+        if (node instanceof Note) {
+            ((Note) node).updateText(newValue);
+        }
+    }
 }
