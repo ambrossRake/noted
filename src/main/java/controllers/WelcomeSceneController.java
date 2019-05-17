@@ -17,28 +17,29 @@ import java.io.IOException;
 
 public class WelcomeSceneController {
 
-    private void createNewNotebook() throws IOException {
-        String notebookName = InputDialogue.promptUser("Create New Notebook", new InputFilter(""), 60);
-        Model.getInstance().createNewNotebook(notebookName);
-    }
+	public void createNewNotebook(ActionEvent event) throws IOException {
+		String notebookName = InputDialogue.promptUser("Create New Notebook", new InputFilter("", ""), 60);
+		Model.getInstance().createNewNotebook(notebookName);
+		displayEditor(event);
+	}
 
-    public void displayEditor(ActionEvent actionEvent) throws IOException {
-        createNewNotebook();
-        Parent editorLayout = FXMLLoader.load(getClass().getResource("/fxml/EditorScene.fxml"));
-        Scene editorScene = new Scene(editorLayout);
-        Stage parentStage = (Stage) ((Node) actionEvent.getTarget()).getScene().getWindow();
-        parentStage.setResizable(true);
-        parentStage.setMaximized(true);
-        parentStage.setScene(editorScene);
+	private void displayEditor(ActionEvent actionEvent) throws IOException {
+		Parent editorLayout = FXMLLoader.load(getClass().getResource("/fxml/EditorScene.fxml"));
+		Scene editorScene = new Scene(editorLayout);
+		Stage parentStage = (Stage) ((Node) actionEvent.getTarget()).getScene().getWindow();
+		parentStage.setResizable(true);
+		parentStage.setMaximized(true);
+		parentStage.setScene(editorScene);
 
-    }
+	}
 
-    public void openNotebook(ActionEvent actionEvent) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open A Notebook");
-        ExtensionFilter nbkExtensionFilter = new ExtensionFilter("Notebook (*.nbk)", "*.nbk");
-        fileChooser.getExtensionFilters().add(nbkExtensionFilter);
-        File fileToOpen = fileChooser.showOpenDialog(((Node) actionEvent.getTarget()).getScene().getWindow());
-        Model.getInstance().openNotebook(fileToOpen);
-    }
+	public void openNotebook(ActionEvent actionEvent) throws IOException {
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Open A Notebook");
+		ExtensionFilter nbkExtensionFilter = new ExtensionFilter("Notebook (*.nbk)", "*.nbk");
+		fileChooser.getExtensionFilters().add(nbkExtensionFilter);
+		File fileToOpen = fileChooser.showOpenDialog(((Node) actionEvent.getTarget()).getScene().getWindow());
+		Model.getInstance().openNotebook(fileToOpen);
+		displayEditor(actionEvent);
+	}
 }

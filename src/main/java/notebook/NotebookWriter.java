@@ -18,58 +18,55 @@ import java.util.ArrayList;
 
 public class NotebookWriter {
 
-    private DocumentBuilder documentBuilder;
-    private Document document;
+	private DocumentBuilder documentBuilder;
+	private Document document;
 
-    public NotebookWriter() throws ParserConfigurationException {
-        documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-    }
+	public NotebookWriter() throws ParserConfigurationException {
+		documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+	}
 
-    private void createXMLElements(Element parentElement, ArrayList<Node> parentNode) {
-        for (Node childNode : parentNode) {
-            if (childNode instanceof Section) {
-                Element sectionElement = document.createElement("Section");
-                sectionElement.setAttribute("Title", childNode.getTitle());
-                parentElement.appendChild(sectionElement);
-                createXMLElements(sectionElement, ((Section) childNode).getChildren());
-            } else if (childNode instanceof Note) {
-                Element noteElement = document.createElement("Note");
-                noteElement.setAttribute("Title", childNode.getTitle());
+	private void createXMLElements(Element parentElement, ArrayList<Node> parentNode) {
+		for (Node childNode : parentNode) {
+			if (childNode instanceof Section) {
+				Element sectionElement = document.createElement("Section");
+				sectionElement.setAttribute("Title", childNode.getTitle());
+				parentElement.appendChild(sectionElement);
+				createXMLElements(sectionElement, ((Section) childNode).getChildren());
+			} else if (childNode instanceof Note) {
+				Element noteElement = document.createElement("Note");
+				noteElement.setAttribute("Title", childNode.getTitle());
+				noteElement.appendChild(document.createTextNode(((Note) childNode).getText()));
+				parentElement.appendChild(noteElement);
+			}
+		}
+	}
 
-                Element textElement = document.createElement("Text");
-                textElement.appendChild(document.createTextNode(((Note) childNode).getText()));
-                noteElement.appendChild(textElement);
-                parentElement.appendChild(noteElement);
-            }
-        }
-    }
+	public void createNewXMLFileFromNotebook(File file, Notebook notebook) {
+		if (!file.exists()) {
+			try {
+				Files.createDirectories(file.toPath().getParent());
+				Files.createFile(file.toPath());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 
-    public void createNewXMLFileFromNotebook(File file, Notebook notebook) {
-        if (!file.exists()) {
-            try {
-                Files.createDirectories(file.toPath().getParent());
-                Files.createFile(file.toPath());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+		try {
+			document = documentBuilder.newDocument();
+			Element root = document.createElement("Notebook");
+			root.setAttribute("Title", notebook.getTitle());
+			document.appendChild(root);
 
-        try {
-            document = documentBuilder.newDocument();
-            Element root = document.createElement("Notebook");
-            root.setAttribute("Title", notebook.getTitle());
-            document.appendChild(root);
+			createXMLElements(root, notebook.getChildren());
 
-            createXMLElements(root, notebook.getChildren());
-
-            TransformerFactory transformerFactory = TransformerFactory.newInstance();
-            Transformer transformer = transformerFactory.newTransformer();
-            DOMSource domSource = new DOMSource(document);
-            StreamResult streamResult = new StreamResult(file);
-            transformer.transform(domSource, streamResult);
-        } catch (TransformerException e) {
-            e.printStackTrace();
-        }
-    }
+			TransformerFactory transformerFactory = TransformerFactory.newInstance();
+			Transformer transformer = transformerFactory.newTransformer();
+			DOMSource domSource = new DOMSource(document);
+			StreamResult streamResult = new StreamResult(file);
+			transformer.transform(domSource, streamResult);
+		} catch (TransformerException e) {
+			e.printStackTrace();
+		}
+	}
 
 }

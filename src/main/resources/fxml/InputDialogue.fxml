@@ -4,11 +4,11 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <VBox spacing="10.0" alignment="CENTER" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
-    <Label text="Notebook Name:"/>
-    <TextField id="inputField" fx:id="fileNameTextField"/>
-    <Label id="errorMessage" fx:id="errorMessage"/>
-    <HBox spacing="5.0" alignment="CENTER_RIGHT">
-        <Button id="cancelButton" text="Cancel"/>
-        <Button id="confirmationButton" text="Create"/>
-    </HBox>
+	<Label text="Notebook Name:"/>
+	<TextField id="inputField" fx:id="fileNameTextField"/>
+	<Label id="errorMessage" fx:id="errorMessage"/>
+	<HBox spacing="5.0" alignment="CENTER_RIGHT">
+		<Button id="cancelButton" text="Cancel"/>
+		<Button id="confirmationButton" text="Create"/>
+	</HBox>
 </VBox>

@@ -1,28 +1,28 @@
 .root{
-    -fx-background-color: #212121;
+	-fx-background-color: #212121;
 }
 
 .label, .button{
-    -fx-text-fill: #ffffff;
+	-fx-text-fill: #ffffff;
 }
 
 #optionMenu{
-    -fx-background-color: #282828;
+	-fx-background-color: #282828;
 }
 
 #footer{
-    -fx-background-color: #141414;
+	-fx-background-color: #141414;
 }
 
 .button{
-    -fx-border-width: 0px;
-    -fx-background-color: #282828;
+	-fx-border-width: 0px;
+	-fx-background-color: #282828;
 }
 
 .button:hover{
-    -fx-background-color: #424242;
+	-fx-background-color: #424242;
 }
 
 .button:pressed{
-    -fx-background-color: #494949;
+	-fx-background-color: #494949;
 }

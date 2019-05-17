@@ -4,23 +4,23 @@ import java.util.ArrayList;
 
 public class Section extends Node {
 
-    private ArrayList<Node> childNodes;
+	private ArrayList<Node> childNodes;
 
-    public Section(String name) {
-        super(name);
-        childNodes = new ArrayList<>();
-    }
+	public Section(String name) {
+		super(name);
+		childNodes = new ArrayList<>();
+	}
 
-    public ArrayList<Node> getChildren() {
-        return childNodes;
-    }
+	public ArrayList<Node> getChildren() {
+		return childNodes;
+	}
 
-    public void addNote(Note note) {
-        childNodes.add(note);
-    }
+	public void addNote(Note note) {
+		childNodes.add(note);
+	}
 
-    public void addSection(Section section) {
-        childNodes.add(section);
-    }
+	public void addSection(Section section) {
+		childNodes.add(section);
+	}
 
 }

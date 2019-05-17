@@ -6,17 +6,17 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <BorderPane fx:controller="controllers.WelcomeSceneController" xmlns="http://javafx.com/javafx/8.0.172-ea"
-            xmlns:fx="http://javafx.com/fxml/1">
-    <left>
-        <VBox id="optionMenu">
-            <Button text="Create New Notebook" onAction="#displayEditor" maxWidth="Infinity"/>
-            <Button text="Open Notebook" onAction="#openNotebook" maxWidth="Infinity"/>
-        </VBox>
-    </left>
+						xmlns:fx="http://javafx.com/fxml/1">
+	<left>
+		<VBox id="optionMenu">
+			<Button text="Create New Notebook" onAction="#createNewNotebook" maxWidth="Infinity"/>
+			<Button text="Open Notebook" onAction="#openNotebook" maxWidth="Infinity"/>
+		</VBox>
+	</left>
 
-    <bottom>
-        <HBox id="footer">
-            <Label text="V1.0"/>
-        </HBox>
-    </bottom>
+	<bottom>
+		<HBox id="footer">
+			<Label text="V1.0"/>
+		</HBox>
+	</bottom>
 </BorderPane>
