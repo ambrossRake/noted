@@ -48,8 +48,10 @@ public class WelcomeSceneController implements Initializable {
 		ExtensionFilter nbkExtensionFilter = new ExtensionFilter("Notebook (*.nbk)", "*.nbk");
 		fileChooser.getExtensionFilters().add(nbkExtensionFilter);
 		File fileToOpen = fileChooser.showOpenDialog(((Node) actionEvent.getTarget()).getScene().getWindow());
-		Model.getInstance().openNotebook(fileToOpen);
-		displayEditor(actionEvent);
+		if (fileToOpen != null) {
+			Model.getInstance().openNotebook(fileToOpen);
+			displayEditor(actionEvent);
+		}
 	}
 
 	// Display recent projects and

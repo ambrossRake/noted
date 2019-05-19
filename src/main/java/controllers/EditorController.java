@@ -79,7 +79,9 @@ public class EditorController implements Initializable {
 		ExtensionFilter nbkExtensionFilter = new ExtensionFilter("Notebook (*.nbk)", "*.nbk");
 		fileChooser.getExtensionFilters().add(nbkExtensionFilter);
 		File fileToSaveTo = fileChooser.showSaveDialog(((MenuItem) actionEvent.getTarget()).getParentPopup());
-		model.saveNotebook(fileToSaveTo);
+		if (fileToSaveTo != null) {
+			model.saveNotebook(fileToSaveTo);
+		}
 	}
 
 	public void createNewSection() throws IOException {
