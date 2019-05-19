@@ -63,8 +63,10 @@ public class InputDialogue {
 	}
 
 	private static void verifyInputFilter(InputFilter filter, String inputText) {
-		if (filter.verify(inputText)) {
-			Label errorMessage = (Label) scene.lookup("#errorMessage");
+		Label errorMessage = (Label) scene.lookup("#errorMessage");
+		if (inputText.isEmpty()) {
+			errorMessage.setText("*Name can not be empty");
+		} else if (filter.verify(inputText)) {
 			errorMessage.setText(filter.getFilterMessage());
 		} else {
 			userInput = inputText;
