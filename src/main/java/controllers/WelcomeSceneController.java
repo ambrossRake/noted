@@ -33,6 +33,8 @@ public class WelcomeSceneController implements Initializable {
 
 	private void displayEditor(ActionEvent actionEvent) throws IOException {
 		Parent editorLayout = FXMLLoader.load(getClass().getResource("/fxml/EditorScene.fxml"));
+		editorLayout.getStylesheets().add(getClass().getResource("/css/EditorScene.css").toExternalForm());
+
 		Scene editorScene = new Scene(editorLayout);
 		Stage parentStage = (Stage) ((Node) actionEvent.getTarget()).getScene().getWindow();
 		parentStage.setResizable(true);

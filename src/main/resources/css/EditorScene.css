@@ -1,0 +1,32 @@
+.root{
+	-fx-background-color: #262933;
+}
+
+.text-area{
+	-fx-text-fill: #E0E0E0;
+ 	-fx-font: 14 Tahoma;
+}
+
+#editorTextArea .content{
+	-fx-background-color: #262933;
+	-fx-border-width: 0;
+}
+
+#editorTreeView .tree-cell{
+	-fx-text-fill: #E0E0E0;
+	-fx-font: 14 Tahoma;
+	-fx-background-color: #343845;
+	-fx-border-width: 0;
+}
+
+#editorTreeView:focused {
+    -fx-background-color: -fx-box-border, -fx-control-inner-background;
+    -fx-background-insets: 0, 1;
+    -fx-padding: 1;
+}
+
+.text-area:focused {
+    -fx-background-color:
+        linear-gradient(from 0px 0px to 0px 4px, derive(-fx-control-inner-background, -8%), -fx-control-inner-background);
+    -fx-background-radius: 2;
+}
