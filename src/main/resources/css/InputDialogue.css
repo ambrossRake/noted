@@ -1,14 +1,16 @@
 .root{
-	-fx-background-color: #212121;
+	-fx-background-color: #262933;
+	-fx-padding: 10;
 }
 
 .label, .button{
-	-fx-text-fill: #ffffff;
+	-fx-font: 12 Tahoma;
+	-fx-text-fill: #FFFAFF;
+	-fx-border-width: 1px;
 }
 
 .button{
-	-fx-border-width: 0px;
-	-fx-background-color: #282828;
+	-fx-padding: 9 30 9 30;
 }
 
 .button:hover{
@@ -17,4 +19,27 @@
 
 .button:pressed{
 	-fx-background-color: #494949;
+}
+
+#cancelButton{
+	-fx-background-color: #343845;
+	-fx-border-color:#2A2D38;
+}
+
+#confirmationButton{
+	-fx-background-color:#364E6B;
+	-fx-border-color:#304661;
+}
+
+#errorMessage{
+	-fx-text-fill: #FF2700;
+}
+
+#inputField{
+	-fx-font: 14 Tahoma;
+	-fx-text-fill: #FFFAFF;
+	-fx-background-color: #262933;
+	-fx-border-style: solid;
+	-fx-border-width: 0 0 2 0;
+	-fx-border-color: #4B596B;
 }

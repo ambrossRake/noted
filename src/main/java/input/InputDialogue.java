@@ -23,6 +23,9 @@ public class InputDialogue {
 
 		stage = new Stage();
 		stage.initModality(Modality.APPLICATION_MODAL);
+		stage.setMinWidth(240);
+		stage.setMinHeight(120);
+
 		stage.setTitle(title);
 
 		Parent layout = FXMLLoader.load(InputDialogue.class.getResource("/fxml/InputDialogue.fxml"));
