@@ -24,7 +24,7 @@ public class WelcomeSceneController implements Initializable {
 	public GridPane cardGridView;
 
 	public void createNewNotebook(ActionEvent event) throws IOException {
-		String notebookName = InputDialogue.promptUser("Create New Notebook", new InputFilter("", ""), 60);
+		String notebookName = InputDialogue.promptUser("Create New Notebook", "Notebook Name:", new InputFilter("", ""), 60);
 		if (notebookName != null) {
 			Model.getInstance().createNewNotebook(notebookName);
 			displayEditor(event);

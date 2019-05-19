@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.VBox?>
 <VBox xmlns:fx="http://javafx.com/fxml/1" prefHeight="120.0" prefWidth="420.0"
 			xmlns="http://javafx.com/javafx/8.0.172-ea">
-	<Label text="Notebook Name:"/>
+	<Label fx:id="inputHeader"/>
 	<TextField id="inputField" fx:id="fileNameTextField"/>
 	<Label id="errorMessage" fx:id="errorMessage"/>
 	<HBox alignment="CENTER_RIGHT">

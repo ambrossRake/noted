@@ -93,7 +93,7 @@ public class EditorController implements Initializable {
 			nodeInputFilter = model.createNodeInputFilter(model.getNotebook().getChildren());
 		}
 
-		String sectionName = InputDialogue.promptUser("Create New Section", nodeInputFilter, 60);
+		String sectionName = InputDialogue.promptUser("Create New Section", "Section Name:", nodeInputFilter, 60);
 		if (sectionName != null) {
 			model.addNewSection(currentlySelectedNode, sectionName);
 			refreshNotebookExplorer();
@@ -109,7 +109,7 @@ public class EditorController implements Initializable {
 			nodeInputFilter = model.createNodeInputFilter(model.getNotebook().getChildren());
 		}
 
-		String noteName = InputDialogue.promptUser("Create New Note", nodeInputFilter, 60);
+		String noteName = InputDialogue.promptUser("Create New Note", "Note Name:", nodeInputFilter, 60);
 		if (noteName != null) {
 			model.addNewNote(currentlySelectedNode, noteName);
 			refreshNotebookExplorer();

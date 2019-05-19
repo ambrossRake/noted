@@ -19,7 +19,7 @@ public class InputDialogue {
 	private static Scene scene;
 	private static String userInput;
 
-	public static String promptUser(String title, InputFilter filter, int maxLength) throws IOException {
+	public static String promptUser(String title, String header, InputFilter filter, int maxLength) throws IOException {
 
 		stage = new Stage();
 		stage.initModality(Modality.APPLICATION_MODAL);
@@ -44,6 +44,9 @@ public class InputDialogue {
 
 			return c;
 		};
+
+		Label inputHeader = (Label) scene.lookup("#inputHeader");
+		inputHeader.setText(header);
 
 		TextField inputField = (TextField) scene.lookup("#inputField");
 		inputField.setTextFormatter(new TextFormatter<>(changeUnaryOperator));
