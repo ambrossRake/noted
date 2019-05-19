@@ -16,7 +16,7 @@
 
 	<left>
 		<VBox id="optionMenu">
-			<Label text="Noted" id="makeshiftLogo" maxWidth="Infinity" styleClass="heading"/>
+			<Label text="noted" id="makeshiftLogo" maxWidth="Infinity" styleClass="heading"/>
 			<Button text="New Notebook" onAction="#createNewNotebook" maxWidth="Infinity"/>
 			<Button text="Open Notebook" onAction="#openNotebook" maxWidth="Infinity"/>
 			<Button text="Settings" maxWidth="Infinity"/>

@@ -3,7 +3,7 @@
 }
 
 #makeshiftLogo{
-	-fx-padding: 24 0 0 0;
+	-fx-padding: 24 64 0 0;
 	-fx-font: 30 'Helvetica Neue';
 }
 
@@ -30,7 +30,7 @@
 
 .button{
 	-fx-text-fill: #E0E0E0;
-	-fx-font: 18 Tahoma;
+	-fx-font: 14 Tahoma;
 	-fx-border-width: 0;
 	-fx-background-color: #343845;
 	-fx-alignment: CENTER_LEFT;

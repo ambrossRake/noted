@@ -16,7 +16,7 @@ public class Main extends Application {
 		Parent welcomeSceneLayout = FXMLLoader.load(getClass().getResource("/fxml/WelcomeScene.fxml"));
 		Scene welcomeScene = new Scene(welcomeSceneLayout);
 		welcomeScene.getStylesheets().add(getClass().getResource("/css/WelcomeScene.css").toExternalForm());
-		stage.setTitle("Noted");
+		stage.setTitle("noted");
 		stage.setWidth(764.0);
 		stage.setHeight(573.0);
 		stage.setResizable(false);
