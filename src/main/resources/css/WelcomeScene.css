@@ -1,28 +1,47 @@
 .root{
-	-fx-background-color: #212121;
+	-fx-background-color: #262933;
 }
 
-.label, .button{
-	-fx-text-fill: #ffffff;
+#makeshiftLogo{
+	-fx-padding: 24 0 0 0;
+	-fx-font: 30 'Helvetica Neue';
+}
+
+.heading{
+	-fx-text-fill: #FFFAFF;
+ 	-fx-border-style: solid;
+  -fx-border-width: 0 0 1 0;
+  -fx-border-color: #A7A7A7;
+}
+
+#recentNotebooksContainer{
+	-fx-padding: 0 9 0 9;
+}
+
+#recentNotebooksLabel{
+	-fx-padding: 38 0 2 0;
+  -fx-font: 20 'Tahoma';
 }
 
 #optionMenu{
-	-fx-background-color: #282828;
-}
-
-#footer{
-	-fx-background-color: #141414;
+	-fx-background-color: #343845;
+	-fx-padding: 5 9 5 9;
 }
 
 .button{
-	-fx-border-width: 0px;
-	-fx-background-color: #282828;
+	-fx-text-fill: #E0E0E0;
+	-fx-font: 18 Tahoma;
+	-fx-border-width: 0;
+	-fx-background-color: #343845;
+	-fx-alignment: CENTER_LEFT;
+	-fx-padding: 9 0 0 0;
 }
 
 .button:hover{
-	-fx-background-color: #424242;
+	-fx-background-color: #434859;
+
 }
 
 .button:pressed{
-	-fx-background-color: #494949;
+	-fx-background-color: #4D5266;
 }

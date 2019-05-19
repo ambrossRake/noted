@@ -17,8 +17,8 @@ public class Main extends Application {
 		Scene welcomeScene = new Scene(welcomeSceneLayout);
 		welcomeScene.getStylesheets().add(getClass().getResource("/css/WelcomeScene.css").toExternalForm());
 		stage.setTitle("Noted");
-		stage.setWidth(700.0);
-		stage.setHeight(550.0);
+		stage.setWidth(764.0);
+		stage.setHeight(573.0);
 		stage.setResizable(false);
 		stage.setScene(welcomeScene);
 		stage.show();
