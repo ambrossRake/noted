@@ -51,7 +51,10 @@ public class InputDialogue {
 		Button confirmationButton = (Button) scene.lookup("#confirmationButton");
 		confirmationButton.setOnAction(e -> verifyInputFilter(filter, inputField.getText()));
 		Button cancelButton = (Button) scene.lookup("#cancelButton");
-		cancelButton.setOnAction(e -> stage.close());
+		cancelButton.setOnAction(e -> {
+			userInput = null;
+			stage.close();
+		});
 
 		stage.setScene(scene);
 		stage.showAndWait();

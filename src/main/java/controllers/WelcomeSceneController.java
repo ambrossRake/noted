@@ -25,8 +25,10 @@ public class WelcomeSceneController implements Initializable {
 
 	public void createNewNotebook(ActionEvent event) throws IOException {
 		String notebookName = InputDialogue.promptUser("Create New Notebook", new InputFilter("", ""), 60);
-		Model.getInstance().createNewNotebook(notebookName);
-		displayEditor(event);
+		if (notebookName != null) {
+			Model.getInstance().createNewNotebook(notebookName);
+			displayEditor(event);
+		}
 	}
 
 	private void displayEditor(ActionEvent actionEvent) throws IOException {
