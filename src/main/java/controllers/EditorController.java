@@ -33,6 +33,8 @@ public class EditorController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		titleBar.setUseSystemMenuBar(true);
+		notebookExplorer.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> handleSelectedNode(newValue)));
+		textArea.textProperty().addListener((observable, oldValue, newValue) -> model.updateNoteText(currentlySelectedNode, newValue));
 		refreshNotebookExplorer();
 	}
 
@@ -60,8 +62,6 @@ public class EditorController implements Initializable {
 
 		createTreeItems(root, notebook.getChildren());
 
-		notebookExplorer.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> handleSelectedNode(newValue)));
-		textArea.textProperty().addListener((observable, oldValue, newValue) -> model.updateNoteText(currentlySelectedNode, newValue));
 	}
 
 	private void handleSelectedNode(TreeItem<String> newValue) {
@@ -95,6 +95,7 @@ public class EditorController implements Initializable {
 
 		String sectionName = InputDialogue.promptUser("Create New Section", "Section Name:", nodeInputFilter, 60);
 		if (sectionName != null) {
+
 			model.addNewSection(currentlySelectedNode, sectionName);
 			refreshNotebookExplorer();
 		}

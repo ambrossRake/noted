@@ -26,7 +26,7 @@ public class Notebook extends Node {
         for (Node childNode : childNodes) {
             if (childNode.getTitle().equals(name)) return childNode;
             if (childNode instanceof Section) {
-                getNode(name, ((Section) childNode).getChildren());
+                return getNode(name, ((Section) childNode).getChildren());
             }
         }
         return this;
