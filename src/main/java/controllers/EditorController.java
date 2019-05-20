@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import models.Model;
+import notebook.Node;
 import notebook.Note;
 import notebook.Notebook;
 import notebook.Section;
@@ -65,8 +66,13 @@ public class EditorController implements Initializable {
 	}
 
 	private void handleSelectedNode(TreeItem<String> newValue) {
+		System.out.println(newValue);
 		if (newValue != null) {
-			currentlySelectedNode = model.getNotebook().getNode(newValue.getValue());
+			ArrayList<Node> root = null;
+			if (currentlySelectedNode instanceof Section) {
+				root = ((Section) currentlySelectedNode).getChildren();
+			}
+			currentlySelectedNode = model.getNotebook().getNode(newValue.getValue(), root);
 		}
 		if (currentlySelectedNode instanceof Note) {
 			textArea.setText(((Note) currentlySelectedNode).getText());
