@@ -9,7 +9,6 @@
 
 #editorTextArea .content{
 	-fx-background-color: #262933;
-	-fx-border-width: 0;
 }
 
 #editorTreeView .tree-cell{

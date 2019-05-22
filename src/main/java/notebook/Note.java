@@ -1,7 +1,7 @@
 package notebook;
 
 public class Note extends Node {
-    private String text;
+    private String text = "";
 
     public Note(String title) {
         super(title);

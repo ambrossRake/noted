@@ -47,7 +47,7 @@ public class WelcomeSceneController implements Initializable {
 	public void openNotebook(ActionEvent actionEvent) throws IOException {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Open A Notebook");
-		ExtensionFilter nbkExtensionFilter = new ExtensionFilter("Notebook (*.nbk)", "*.nbk");
+		ExtensionFilter nbkExtensionFilter = new ExtensionFilter("Notebook (*.nbk)", "nbk");
 		fileChooser.getExtensionFilters().add(nbkExtensionFilter);
 		File fileToOpen = fileChooser.showOpenDialog(((Node) actionEvent.getTarget()).getScene().getWindow());
 		if (fileToOpen != null) {

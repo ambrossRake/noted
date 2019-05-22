@@ -2,7 +2,7 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.BorderPane?>
-<BorderPane prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea"
+<BorderPane fx:id="borderPane" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea"
 						xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.EditorController">
 
 	<MenuBar fx:id="titleBar">
@@ -23,7 +23,7 @@
 		<ToolBar/>
 	</top>
 	<center>
-		<TextArea id="editorTextArea" fx:id="textArea"/>
+		<!--	<TextArea id="editorTextArea" fx:id="textArea"/> -->
 	</center>
 	<left>
 		<TreeView id="editorTreeView" fx:id="notebookExplorer">

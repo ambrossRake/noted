@@ -4,13 +4,18 @@ import input.InputDialogue;
 import input.InputFilter;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import models.Model;
 import notebook.Note;
 import notebook.Notebook;
 import notebook.Section;
+import org.fxmisc.richtext.StyleClassedTextArea;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,7 +27,8 @@ public class EditorController implements Initializable {
 
 	public MenuBar titleBar;
 	public TreeView<String> notebookExplorer;
-	public TextArea textArea;
+	public BorderPane borderPane;
+	private StyleClassedTextArea textArea;
 	private Model model;
 	private notebook.Node currentlySelectedNode;
 
@@ -34,10 +40,15 @@ public class EditorController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		titleBar.setUseSystemMenuBar(true);
 		notebookExplorer.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> handleSelectedNode(newValue)));
-		textArea.textProperty().addListener((observable, oldValue, newValue) -> model.updateNoteText(currentlySelectedNode, newValue));
+		setupRichTextArea();
 		refreshNotebookExplorer();
 	}
 
+	private void setupRichTextArea() {
+		textArea = new StyleClassedTextArea();
+		borderPane.setCenter(textArea);
+		textArea.textProperty().addListener((observable, oldValue, newValue) -> model.updateNoteText(currentlySelectedNode, newValue));
+	}
 	private void createTreeItems(TreeItem<String> parentTreeItem, ArrayList<notebook.Node> parentNode) {
 		for (notebook.Node childNode : parentNode) {
 			if (childNode instanceof Section) {
@@ -69,7 +80,10 @@ public class EditorController implements Initializable {
 			currentlySelectedNode = model.getNotebook().getNode(newValue.getValue());
 		}
 		if (currentlySelectedNode instanceof Note) {
-			textArea.setText(((Note) currentlySelectedNode).getText());
+			String noteText = ((Note) currentlySelectedNode).getText();
+			if (noteText != null) {
+				textArea.replaceText(noteText);
+			}
 		}
 	}
 
