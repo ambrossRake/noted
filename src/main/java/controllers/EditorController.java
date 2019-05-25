@@ -8,7 +8,6 @@ import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import models.Model;
-import notebook.Node;
 import notebook.Note;
 import notebook.Notebook;
 import notebook.Section;
@@ -17,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.ResourceBundle;
 
 public class EditorController implements Initializable {
@@ -65,14 +65,23 @@ public class EditorController implements Initializable {
 
 	}
 
+	// Returns a string list containing the names of a TreeItem's ancestry
+	private ArrayList<String> generateFullNameFromTreeItem(TreeItem<String> treeItem, ArrayList<String> fullName) {
+		fullName.add(treeItem.getValue());
+		TreeItem<String> parent = treeItem.getParent();
+		if (parent != null) {
+			generateFullNameFromTreeItem(parent, fullName);
+		}
+
+		return fullName;
+	}
+
 	private void handleSelectedNode(TreeItem<String> newValue) {
-		System.out.println(newValue);
 		if (newValue != null) {
-			ArrayList<Node> root = null;
-			if (currentlySelectedNode instanceof Section) {
-				root = ((Section) currentlySelectedNode).getChildren();
-			}
-			currentlySelectedNode = model.getNotebook().getNode(newValue.getValue(), root);
+			ArrayList<String> fullName = generateFullNameFromTreeItem(newValue, new ArrayList<>());
+			Collections.reverse(fullName);
+			fullName.remove(0);
+			currentlySelectedNode = model.getNotebook().getNode(fullName, model.getNotebook().getChildren());
 		}
 		if (currentlySelectedNode instanceof Note) {
 			textArea.setText(((Note) currentlySelectedNode).getText());

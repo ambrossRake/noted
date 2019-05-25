@@ -1,8 +1,9 @@
 package notebook;
 
-public class Node {
+public abstract class Node {
 
     private String title;
+    private Node parentNode;
 
     Node(String title) {
         this.title = title;
@@ -11,4 +12,14 @@ public class Node {
     public String getTitle() {
         return title;
     }
+
+    public Node getParentNode() {
+        return parentNode;
+    }
+
+    void setParentNode(Node parentNode) {
+        this.parentNode = parentNode;
+    }
+
+
 }
