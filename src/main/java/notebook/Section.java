@@ -15,12 +15,9 @@ public class Section extends Node {
 		return childNodes;
 	}
 
-	public void addNote(Note note) {
-		childNodes.add(note);
-	}
-
-	public void addSection(Section section) {
-		childNodes.add(section);
+	public void addNode(Node node) {
+		node.setParentNode(this);
+		childNodes.add(node);
 	}
 
 }
