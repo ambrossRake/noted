@@ -1,17 +1,19 @@
 package notebook;
 
 public class Note extends Node {
-    private String text;
+	private String text;
 
-    public Note(String title) {
-        super(title);
-    }
+	public Note(String title) {
+		super(title);
+	}
 
-    public void updateText(String newText) {
-        text = newText;
-    }
+	public void updateText(String newText) {
+		text = newText;
+	}
 
-    public String getText() {
-        return text;
-    }
+	public String getText() {
+		return text;
+	}
+
+
 }

@@ -34,7 +34,7 @@ public class Model {
 
 	public void createNewNotebook(String name) {
 		notebook = new Notebook(name);
-		notebook.addNote(new Note("Untitled"));
+		notebook.addNode(new Note("Untitled"));
 	}
 
 	public Notebook getNotebook() {
@@ -47,17 +47,17 @@ public class Model {
 
 	public void addNewSection(Node parentNode, String sectionName) {
 		if (parentNode instanceof Section) {
-			((Section) parentNode).addSection(new Section(sectionName));
+			((Section) parentNode).addNode(new Section(sectionName));
 		} else {
-			notebook.addSection(new Section(sectionName));
+			notebook.addNode(new Section(sectionName));
 		}
 	}
 
 	public void addNewNote(Node parentNode, String noteName) {
 		if (parentNode instanceof Section) {
-			((Section) parentNode).addNote(new Note(noteName));
+			((Section) parentNode).addNode(new Note(noteName));
 		} else {
-			notebook.addNote(new Note(noteName));
+			notebook.addNode(new Note(noteName));
 		}
 	}
 

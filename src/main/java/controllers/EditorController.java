@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.ResourceBundle;
 
 public class EditorController implements Initializable {
@@ -33,6 +34,8 @@ public class EditorController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		titleBar.setUseSystemMenuBar(true);
+		notebookExplorer.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> handleSelectedNode(newValue)));
+		textArea.textProperty().addListener((observable, oldValue, newValue) -> model.updateNoteText(currentlySelectedNode, newValue));
 		refreshNotebookExplorer();
 	}
 
@@ -60,13 +63,25 @@ public class EditorController implements Initializable {
 
 		createTreeItems(root, notebook.getChildren());
 
-		notebookExplorer.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> handleSelectedNode(newValue)));
-		textArea.textProperty().addListener((observable, oldValue, newValue) -> model.updateNoteText(currentlySelectedNode, newValue));
+	}
+
+	// Returns a string list containing the names of a TreeItem's ancestry
+	private ArrayList<String> generateFullNameFromTreeItem(TreeItem<String> treeItem, ArrayList<String> fullName) {
+		fullName.add(treeItem.getValue());
+		TreeItem<String> parent = treeItem.getParent();
+		if (parent != null) {
+			generateFullNameFromTreeItem(parent, fullName);
+		}
+
+		return fullName;
 	}
 
 	private void handleSelectedNode(TreeItem<String> newValue) {
 		if (newValue != null) {
-			currentlySelectedNode = model.getNotebook().getNode(newValue.getValue());
+			ArrayList<String> fullName = generateFullNameFromTreeItem(newValue, new ArrayList<>());
+			Collections.reverse(fullName);
+			fullName.remove(0);
+			currentlySelectedNode = model.getNotebook().getNode(fullName, model.getNotebook().getChildren());
 		}
 		if (currentlySelectedNode instanceof Note) {
 			textArea.setText(((Note) currentlySelectedNode).getText());
@@ -95,6 +110,7 @@ public class EditorController implements Initializable {
 
 		String sectionName = InputDialogue.promptUser("Create New Section", "Section Name:", nodeInputFilter, 60);
 		if (sectionName != null) {
+
 			model.addNewSection(currentlySelectedNode, sectionName);
 			refreshNotebookExplorer();
 		}
