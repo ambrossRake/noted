@@ -70,6 +70,7 @@ public class Model {
 	}
 
 	public InputFilter createNodeInputFilter(ArrayList<Node> childNodes) {
+
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("\\b(");
 		for (Node node : childNodes) {

@@ -127,14 +127,7 @@ public class EditorController implements Initializable {
 	}
 
 	public void createNewSection() throws IOException {
-		InputFilter nodeInputFilter;
-
-		if (currentlySelectedNode instanceof Section) {
-			nodeInputFilter = model.createNodeInputFilter(((Section) currentlySelectedNode).getChildren());
-		} else {
-			nodeInputFilter = model.createNodeInputFilter(model.getNotebook().getChildren());
-		}
-
+		InputFilter nodeInputFilter = getNodeInputFilter();
 		String sectionName = InputDialogue.promptUser("Create New Section", "Section Name:", nodeInputFilter, 60);
 		if (sectionName != null) {
 
@@ -143,15 +136,21 @@ public class EditorController implements Initializable {
 		}
 	}
 
-	public void createNewNote() throws IOException {
+	private InputFilter getNodeInputFilter() {
 		InputFilter nodeInputFilter;
-
 		if (currentlySelectedNode instanceof Section) {
 			nodeInputFilter = model.createNodeInputFilter(((Section) currentlySelectedNode).getChildren());
+		} else if (currentlySelectedNode.getParentNode() instanceof Section) {
+			nodeInputFilter = model.createNodeInputFilter(((Section) currentlySelectedNode.getParentNode()).getChildren());
 		} else {
 			nodeInputFilter = model.createNodeInputFilter(model.getNotebook().getChildren());
 		}
+		return nodeInputFilter;
+	}
 
+	public void createNewNote() throws IOException {
+		System.out.println(currentlySelectedNode);
+		InputFilter nodeInputFilter = getNodeInputFilter();
 		String noteName = InputDialogue.promptUser("Create New Note", "Note Name:", nodeInputFilter, 60);
 		if (noteName != null) {
 			model.addNewNote(currentlySelectedNode, noteName);

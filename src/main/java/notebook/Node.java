@@ -2,7 +2,7 @@ package notebook;
 
 public abstract class Node {
 
-    private String title;
+	private String title;
 	private Node parentNode;
 
     Node(String title) {
