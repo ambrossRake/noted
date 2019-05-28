@@ -4,10 +4,7 @@ import input.InputDialogue;
 import input.InputFilter;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -29,7 +26,7 @@ public class EditorController implements Initializable {
 	public MenuBar titleBar;
 	public TreeView<String> notebookExplorer;
 	public BorderPane borderPane;
-	private StyleClassedTextArea textArea;
+	public TabPane tabPane;
 	private Model model;
 	private notebook.Node currentlySelectedNode;
 
@@ -41,15 +38,9 @@ public class EditorController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		titleBar.setUseSystemMenuBar(true);
 		notebookExplorer.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> handleSelectedNode(newValue)));
-		setupRichTextArea();
 		refreshNotebookExplorer();
 	}
 
-	private void setupRichTextArea() {
-		textArea = new StyleClassedTextArea();
-		borderPane.setCenter(textArea);
-		textArea.textProperty().addListener((observable, oldValue, newValue) -> model.updateNoteText(currentlySelectedNode, newValue));
-	}
 	private void createTreeItems(TreeItem<String> parentTreeItem, ArrayList<notebook.Node> parentNode) {
 		for (notebook.Node childNode : parentNode) {
 			if (childNode instanceof Section) {
@@ -95,11 +86,33 @@ public class EditorController implements Initializable {
 			currentlySelectedNode = model.getNotebook().getNode(fullName, model.getNotebook().getChildren());
 		}
 		if (currentlySelectedNode instanceof Note) {
-			String noteText = ((Note) currentlySelectedNode).getText();
-			if (noteText != null) {
-				textArea.replaceText(noteText);
-			}
+			Note currentNote = (Note) currentlySelectedNode;
+			openNewNoteTab(currentNote);
 		}
+	}
+
+	// Creates a new tab with an embedded StyleClassedTextArea
+	private void openNewNoteTab(Note note) {
+		if (!note.getHasActiveTab()) {
+			Tab tab = new Tab(currentlySelectedNode.getTitle());
+			StyleClassedTextArea richTextArea = new StyleClassedTextArea();
+			richTextArea.replaceText(note.getText());
+			tab.setContent(richTextArea);
+			tab.setOnClosed((e) -> onTabClose(note, richTextArea));
+			tabPane.getTabs().add(tab);
+			note.setHasActiveTab(true);
+		}
+	}
+
+	private void onTabClose(Note note, StyleClassedTextArea richTextArea) {
+		model.updateNoteText(note, richTextArea.getText());
+		deselectCurrentlySelectedNode();
+		note.setHasActiveTab(false);
+	}
+
+	private void deselectCurrentlySelectedNode() {
+		notebookExplorer.getSelectionModel().clearSelection();
+		currentlySelectedNode = null;
 	}
 
 	public void saveNoteBookAs(ActionEvent actionEvent) {

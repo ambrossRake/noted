@@ -23,6 +23,9 @@
 		<ToolBar/>
 	</top>
 	<center>
+		<TabPane fx:id="tabPane">
+
+		</TabPane>
 		<!--	<TextArea id="editorTextArea" fx:id="textArea"/> -->
 	</center>
 	<left>

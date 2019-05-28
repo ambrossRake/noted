@@ -65,10 +65,8 @@ public class Model {
 		notebook = notebookReader.createNewNotebookFromXMLFile(file);
 	}
 
-	public void updateNoteText(Node node, String newValue) {
-		if (node instanceof Note) {
-			((Note) node).updateText(newValue);
-		}
+	public void updateNoteText(Note note, String newValue) {
+		note.updateText(newValue);
 	}
 
 	public InputFilter createNodeInputFilter(ArrayList<Node> childNodes) {
