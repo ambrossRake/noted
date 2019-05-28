@@ -45,6 +45,7 @@ public class EditorController implements Initializable {
 		for (notebook.Node childNode : parentNode) {
 			if (childNode instanceof Section) {
 				TreeItem<String> sectionTreeItem = new TreeItem<>(childNode.getTitle());
+				sectionTreeItem.setExpanded(true);
 				parentTreeItem.getChildren().add(sectionTreeItem);
 				createTreeItems(sectionTreeItem, ((Section) childNode).getChildren());
 			} else if (childNode instanceof Note) {
@@ -127,6 +128,7 @@ public class EditorController implements Initializable {
 	}
 
 	public void createNewSection() throws IOException {
+		if (currentlySelectedNode == null) return;
 		InputFilter nodeInputFilter = getNodeInputFilter();
 		String sectionName = InputDialogue.promptUser("Create New Section", "Section Name:", nodeInputFilter, 60);
 		if (sectionName != null) {
@@ -149,7 +151,7 @@ public class EditorController implements Initializable {
 	}
 
 	public void createNewNote() throws IOException {
-		System.out.println(currentlySelectedNode);
+		if (currentlySelectedNode == null) return;
 		InputFilter nodeInputFilter = getNodeInputFilter();
 		String noteName = InputDialogue.promptUser("Create New Note", "Note Name:", nodeInputFilter, 60);
 		if (noteName != null) {

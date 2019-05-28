@@ -9,12 +9,12 @@
 		<Menu text="File">
 			<Menu text="New">
 				<MenuItem text="Notebook"/>
-				<MenuItem text="Section" onAction="#createNewSection"/>
-				<MenuItem text="Note" onAction="#createNewNote"/>
+				<MenuItem text="Section" onAction="#createNewSection" accelerator="Shortcut+E"/>
+				<MenuItem text="Note" onAction="#createNewNote" accelerator="Shortcut+R"/>
 			</Menu>
-			<MenuItem text="Open"/>
+			<MenuItem text="Open" accelerator="Shortcut+O"/>
 			<MenuItem text="Save Notebook"/>
-			<MenuItem onAction="#saveNoteBookAs" text="Save Notebook As..."/>
+			<MenuItem onAction="#saveNoteBookAs" text="Save Notebook As..." accelerator="Shortcut+Shift+S"/>
 			<MenuItem text="Close Notebook"/>
 		</Menu>
 	</MenuBar>
